@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./bin/server.js"
+    "dev": "nodemon ./src/server.js"
   },
   "repository": {
     "type": "git",
@@ -15,7 +15,9 @@
   "author": "Rodrigo Souza Camelo",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3",
-    "nodemon": "^1.17.5"
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
   }
 }
