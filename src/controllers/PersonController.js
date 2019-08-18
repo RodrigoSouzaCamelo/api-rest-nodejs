@@ -1,4 +1,4 @@
-let data = require('../models/persons.json');
+const personModel = require('../models/Person');
 const cors = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
@@ -7,22 +7,44 @@ const cors = {
 module.exports = {
     index(req, res, next){
         res.set(cors);
-        res.status(200).json(data);
+        
+        personModel.getAll().then((result) => {
+            res.status(200).json(result);
+        }, (err) => {
+            res.status(500).json(err);
+        });
     },
 
-    store(req, res, next) {
+    store(req, res) {
+        const person = req.body;
+        
         res.set(cors);
-        res.status(200).send('Requisição POST recebida com sucesso!');
-        next();
+
+        personModel.create(person).then((result) => {
+            res.status(200).json(result);
+        }, (err) => {
+            res.status(500).json(err);
+        });
     },
 
-    update(req, res, next) {
-        const id = req.params.id;
-        res.status(200).send(`Requisição PUT recebida com sucesso! ${id}`);
+    update(req, res) {
+        const { id } = req.params;
+        const person = req.body;
+
+        personModel.update(id, person).then((result) => {
+            res.status(200).json(result);
+        }, (err) => {
+            res.status(500).json(err);
+        });
     },
 
-    delete(req, res, next) {
-        const id = req.params.id;
-        res.status(200).send(`Requisição DELETE recebida com sucesso! ${id}`);
+    delete(req, res) {
+        const { id } = req.params;
+
+        personModel.delete(id).then((result) => {
+            res.status(200).json(result);
+        }, (err) => {
+            res.status(500).json(err);
+        });
     },
 }
